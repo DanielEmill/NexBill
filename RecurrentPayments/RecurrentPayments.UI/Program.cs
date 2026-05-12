@@ -1,16 +1,47 @@
-namespace RecurrentPayments.UI
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using RecurrentPayments.Application.Services;
+using RecurrentPayments.Infrastructure.Persistence;
+using Application = System.Windows.Forms.Application;
+
+namespace RecurrentPayments.UI;
+
+static class Program
 {
-    internal static class Program
+    public static ServiceProvider ServiceProvider { get; private set; } = null!;
+
+    [STAThread]
+    static void Main()
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-        }
+        ApplicationConfiguration.Initialize();
+
+        var services = new ServiceCollection();
+        ConfigureServices(services);
+        ServiceProvider = services.BuildServiceProvider();
+
+        // Inicializar BD
+        using var scope = ServiceProvider.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        DatabaseInitializer.Initialize(db);
+
+        System.Windows.Forms.Application.Run(new MainForm());
+
+    }
+
+    static void ConfigureServices(IServiceCollection services)
+    {
+        var dbPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "RecurrentPayments",
+            "app.db"
+        );
+
+        Directory.CreateDirectory(Path.GetDirectoryName(dbPath)!);
+
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlite($"Data Source={dbPath}"));
+        // Servicios
+        services.AddScoped<ClientService>();
+        services.AddScoped<ContractService>();
     }
 }

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Krypton.Toolkit" Version="105.26.4.110" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.7" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.7" />
   </ItemGroup>
