@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="RecurrentPayments.Application/RecurrentPayments.Application.csproj" />
+  <Project Path="RecurrentPayments.Domain/RecurrentPayments.Domain.csproj" />
+  <Project Path="RecurrentPayments.Infrastructure/RecurrentPayments.Infrastructure.csproj" />
+  <Project Path="RecurrentPayments.UI/RecurrentPayments.UI.csproj" />
+</Solution>
