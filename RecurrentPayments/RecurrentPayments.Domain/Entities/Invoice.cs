@@ -1,8 +1,9 @@
 ﻿using RecurrentPayments.Domain.Enums;
+using RecurrentPayments.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
-using RecurrentPayments.Domain.Enums;
 
 namespace RecurrentPayments.Domain.Entities
 {
@@ -10,8 +11,13 @@ namespace RecurrentPayments.Domain.Entities
     {
         public int Id { get; set; }
         public int ContractId { get; set; }
+
+        [Range(0.01, 9999999)]
         public decimal Amount { get; set; }
+
+        [Range(0, 9999999)]
         public decimal PaidAmount { get; set; } = 0;
+
         public DateOnly BillingDate { get; set; }
         public InvoiceStatus Status { get; set; } = InvoiceStatus.Pending;
         public DateTime CreatedAt { get; set; } = DateTime.Now;

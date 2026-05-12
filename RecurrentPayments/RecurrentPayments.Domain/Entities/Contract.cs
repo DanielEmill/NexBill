@@ -1,7 +1,8 @@
-﻿using System;
+﻿using RecurrentPayments.Domain.Enums;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
-using RecurrentPayments.Domain.Enums;
 
 namespace RecurrentPayments.Domain.Entities
 {
@@ -9,7 +10,10 @@ namespace RecurrentPayments.Domain.Entities
     {
         public int Id { get; set; }
         public int ClientId { get; set; }
+
+        [Range(1, 9999999)]
         public decimal Amount { get; set; }
+
         public BillingFrequency Frequency { get; set; }
         public DateOnly NextBillingDate { get; set; }
         public ContractStatus Status { get; set; } = ContractStatus.Active;
